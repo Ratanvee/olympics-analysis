@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="country_wise_content">
+    <h1>Interactive Graph</h1>
+    <form id="data-form">
+        <label for="country">Select Country:</label>
+        <div>
+            <input autocomplete="off" list="browsers" placeholder="India" id="country" name="browsers" required>
+            <datalist id="browsers">
+                {% for key in country_list %}
+                <option value="{{key}}">{{ key }}</option>
+                {% endfor %}
+
+            </datalist>
+            <button type="submit">Update Graph</button>
+        </div>
+    </form>
+    <div>
+        <div id="graph" style="width:50%;height:400px;"></div>
+    </div>
+</div>
+<style>
+    .country_wise_content {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-self: center;
+        gap: 30px;
+    }
+
+    input {
+        height: 30px;
+        width: 400px;
+        border: 1px solid white;
+        border-radius: 6px;
+        font-size: 18px;
+        padding-left: 10px;
+    }
+
+    label {
+        font-size: 22px;
+    }
+
+    form div {
+        display: flex;
+        gap: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        height: 35px;
+        border: 1px solid white;
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        color: red;
+        border: 1px solid red;
+    }
+
+    @media only screen and (width: 480px) {
+        #graph {
+            width: 50%;
+            height: 500px;
+        }
+    }
+</style>
+
+<div id="graph"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+    // Use the data passed from the server
+    const athlets_data = {{ country_medal_data| tojson }};  // No 'default' argument needed
+    console.log(athlets_data);  // Debugging to ensure data is passed correctly
+
+    // Only plot if there is data
+    if (athlets_data.length > 0) {
+        const athlets_over_t = {
+            x: athlets_data.map(d => d.Year),  // X axis - Year
+            y: athlets_data.map(d => d.Medal), // Y axis - Medals
+            type: 'scatter',
+            mode: 'lines+markers'
+        };
+
+        const athlets_layout = {
+            title: 'Medals over Year',
+            xaxis: { title: 'Year' },
+            yaxis: { title: 'Medals' }
+        };
+
+        Plotly.newPlot('graph', [athlets_over_t], athlets_layout);
+    } else {
+        console.error("No data available to plot.");
+    }
+</script>
+
+
+
+
+<script>
+    // Function to create a trace
+    function createTrace(xData, yData) {
+        return {
+            x: xData,
+            y: yData,
+            type: 'scatter',
+            mode: 'lines+markers',
+            marker: { color: 'blue' }
+        };
+    }
+
+    // Function to update the chart
+    function updateChart(xData, yData, country) {
+        const trace = createTrace(xData, yData);
+        const layout = {
+            title: `${country} Medals Over Years`,
+            xaxis: { title: 'Year' },
+            yaxis: { title: 'Medals' }
+        };
+        Plotly.react('graph', [trace], layout);
+    }
+
+    // Handle form submission
+    document.getElementById('data-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const country = document.getElementById('country').value;
+
+        // Fetch updated data for the selected country from FastAPI backend
+        fetch('/update_graph', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ country: country })
+        })
+            .then(response => response.json())
+            .then(dataaa => {
+                console.log("what are ho dong :", dataaa)
+                const xData = dataaa.map(d => d.Year);
+                const yData = dataaa.map(d => d.Medal);
+                updateChart(xData, yData, country);
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+{% endblock %}

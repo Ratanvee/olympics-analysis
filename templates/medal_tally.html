@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="content-container" class="container">
+    <h1>Medal Tally</h1>
+    <form id="optionsForm" onsubmit="submitForm(event)">
+        <div id="year_list_medal">
+            <label for="year">Select Year:</label>
+            <input autocomplete="off" list="browsers" id="year" placeholder="Overall" name="browsers" required>
+
+            <datalist id="browsers">
+                {% for year in years %}
+                <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </datalist>
+        </div>
+        <div id="country_list_medal">
+            <label for="country">Select Country:</label>
+            <input autocomplete="off" list="browserss" id="country" placeholder="Overall" name="browserss" required>
+            <datalist id="browserss">
+
+                <!-- <select name="country" id="country"> -->
+                {% for country in countries %}
+                <option value="{{ country }}">{{ country }}</option>
+                {% endfor %}
+                <!-- </select> -->
+            </datalist>
+
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Data Table -->
+    <div id="table-container">
+        {{ table|safe }} <!-- This will load the default table -->
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #table-container {
+        margin-top: 20px;
+        width: 70%;
+
+
+    }
+
+    #optionsForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        width: 95%;
+    }
+
+    #optionsForm div {
+        display: flex;
+        flex-direction: column;
+        align-items: unset;
+        justify-self: unset;
+        width: 50%;
+        gap: 10px;
+    }
+
+    input {
+        height: 30px;
+        border: 1px solid black;
+        border-radius: 4px;
+    }
+    button{
+        height: 40px;
+        width: 100px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background-color: black;
+        color: white;
+    }
+    button:hover{
+        border: 1px solid red;
+        color: red;
+    }
+    .dataframe {
+        width: 95%;
+        margin: 0;
+        padding: 0;
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #table-container {
+            width: 100%;
+        }
+
+        .dataframe {
+            font-size: 13px;
+        }
+
+        #optionsForm {
+            width: 100%;
+        }
+
+        #optionsForm div {
+            display: flex;
+            flex-direction: column;
+            align-items: unset;
+            justify-self: unset;
+            width: 80%;
+            gap: 10px;
+        }
+    }
+</style>
+
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+        const year = document.getElementById('year').value;
+        const country = document.getElementById('country').value;
+
+        fetch('/overall_analysis_submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ year, country })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('table-container').innerHTML = data.data;
+            });
+    }
+</script>
+{% endblock %}

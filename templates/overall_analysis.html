@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<h1>Overall Analysis</h1>
+
+
+
+<div class="container">
+    <h1>Top Statistics</h1>
+    <div class="stats-grid">
+        <div class="stat">
+            <h2>Editions</h2>
+            <p class="count-wrapper" data-target="{{editions}}">0</p>
+        </div>
+        <div class="stat">
+            <h2>Hosts</h2>
+            <p class="count-wrapper" data-target="{{cities}}">0</p>
+        </div>
+        <div class="stat">
+            <h2>Sports</h2>
+            <p class="count-wrapper" data-target="{{sports}}">0</p>
+        </div>
+        <div class="stat">
+            <h2>Events</h2>
+            <p class="count-wrapper" data-target="{{events}}">450</p>
+        </div>
+        <div class="stat">
+            <h2>Nations</h2>
+            <p class="count-wrapper" data-target="{{nations}}">50</p>
+        </div>
+        <div class="stat">
+            <h2>Athletes</h2>
+            <p class="count-wrapper" data-target="{{athlets}}">115850</p>
+        </div>
+    </div>
+    <footer>Made with HTML & CSS</footer>
+</div>
+
+
+<script>
+    function startAutoIncrement() {
+        const countElements = document.querySelectorAll('.count-wrapper');
+        const incrementInterval = 20; // Interval in milliseconds (0.1 second)
+        const incrementAmount = 1; // Amount to increment each time
+
+        countElements.forEach(countElement => {
+            const targetValue = parseInt(countElement.dataset.target, 10);
+            let currentCount = parseInt(countElement.innerText, 10);
+
+            const intervalId = setInterval(() => {
+                if (currentCount >= targetValue) {
+                    clearInterval(intervalId);
+                } else {
+                    currentCount += incrementAmount;
+                    countElement.innerText = currentCount;
+                }
+            }, incrementInterval);
+        });
+    }
+
+    // Automatically start the count increment when the page loads
+    window.onload = startAutoIncrement;
+</script>
+
+
+<!-- Add a div with the id 'graph' -->
+<div class="chats">
+    <div class="graphss">
+        <div id="graph" style="width:70%;height:600px;"></div>
+    </div>
+    <div class="graphss">
+        <div id="graph1" style="width:70%;height:600px;"></div>
+    </div>
+    <div class="graphss">
+        <div id="graph2" style="width:70%;height:600px;"></div>
+    </div>
+    <div class="graphss">
+        <div id="graph3" style="width:70%;height:600px;"></div>
+    </div>
+    <div class="graphss">
+        <div id="graph4" style="width:70%;height:600px;"></div>
+    </div>
+    <div class="graphss">
+        <div id="heatmap" style="width:70%; height: 600px;"></div>
+    </div>
+
+
+</div>
+
+<style>
+    .chats {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<script>
+    // Data from Flask passed as JSON
+    const athlets_data = {{ athlets_over_time| tojson }};
+    const event_data = {{ event_over_time| tojson }};
+    const sports_data = {{ sports_over_time| tojson }};
+    const region_data = {{ region_over_time| tojson }};
+    const city_data = {{ city_over_time| tojson }};
+
+
+
+
+
+
+
+
+    // Convert data to Plotly format
+    const athlets_over_t = {
+        x: athlets_data.map(d => d.Editions),  // X axis - Country Names
+        y: athlets_data.map(d => d.Name),   // Y axis - Medal Counts
+        type: 'scatter', // Change to 'scatter' for line chart
+        mode: 'lines+markers' // Optional: Add markers
+    };
+
+    const athlets_layout = {
+        title: 'Athlets over the Year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Athlets over Year' }
+    };
+
+    // Plot the graph
+    Plotly.newPlot('graph', [athlets_over_t], athlets_layout);
+
+
+
+    const event_over_t = {
+        x: event_data.map(d => d.Editions),  // X axis - Country Names
+        y: event_data.map(d => d.Event),   // Y axis - Medal Counts
+        type: 'scatter', // Change to 'scatter' for line chart
+        mode: 'lines+markers' // Optional: Add markers
+    };
+
+    const event_layout = {
+        title: 'Events over the Year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Events' }
+    };
+
+    // Plot the graph
+    Plotly.newPlot('graph1', [event_over_t], event_layout);
+
+
+
+    const sports_over_t = {
+        x: sports_data.map(d => d.Editions),  // X axis - Country Names
+        y: sports_data.map(d => d.Sport),   // Y axis - Medal Counts
+        type: 'scatter', // Change to 'scatter' for line chart
+        mode: 'lines+markers' // Optional: Add markers
+    };
+
+    const sports_layout = {
+        title: 'Sports over the year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Sports' }
+    };
+
+    // Plot the graph
+    Plotly.newPlot('graph2', [sports_over_t], sports_layout);
+
+
+
+    const region_over_t = {
+        x: region_data.map(d => d.Editions),  // X axis - Country Names
+        y: region_data.map(d => d.region),   // Y axis - Medal Counts
+        type: 'scatter', // Change to 'scatter' for line chart
+        mode: 'lines+markers' // Optional: Add markers
+    };
+
+    const region_layout = {
+        title: 'Regions over the Year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Region' }
+    };
+
+    // Plot the graph
+    Plotly.newPlot('graph3', [region_over_t], region_layout);
+
+
+
+    const city_over_t = {
+        x: city_data.map(d => d.Editions),  // X axis - Country Names
+        y: city_data.map(d => d.City),   // Y axis - Medal Counts
+        type: 'scatter', // Change to 'scatter' for line chart
+        mode: 'lines+markers' // Optional: Add markers
+    };
+
+
+    const city_layout = {
+        title: 'City over the Year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Participating Citys' }
+    };
+
+    // Plot the graph
+    Plotly.newPlot('graph4', [city_over_t], city_layout);
+
+
+    // Heatmap 
+    var tableData = {{ table_data | tojson }};
+
+    var heatmapData = [{
+        z: tableData.data,  // The matrix of event counts
+        x: tableData.columns,  // The years
+        y: tableData.index,  // The sports
+        type: 'heatmap',
+        colorscale: [
+            [0, '#200833'],    // Dark Purple
+            [0.25, '#530f49'], // Medium Purple
+            [0.5, '#be2a41'],  // Redish Pink
+            [0.75, '#f9714d'], // Orange
+            [1, '#fcca79']     // Light Orange
+        ]
+    }];
+
+    var layout = {
+        title: 'Olympic Events by Sport and Year',
+        xaxis: { title: 'Year' },
+        yaxis: { title: 'Sport' }
+    };
+
+    Plotly.newPlot('heatmap', heatmapData, layout);
+
+
+
+</script>
+
+
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: white;
+    }
+
+    .container {
+        text-align: center;
+        padding: 50px;
+        width: 91%;
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 60%;
+    }
+
+    .stat {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .stat h2 {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .stat p {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    footer {
+        margin-top: 50px;
+        font-size: 12px;
+    }
+
+    .graphss {
+
+        height: 800px;
+    }
+
+    @media screen and (max-width: 800px) {
+        .graphss {
+            width: 100%;
+        }
+
+        .container {
+            width: 62%;
+        }
+    }
+</style>
+
+
+
+
+<div id="result"></div>
+{% endblock %}
