@@ -16,16 +16,6 @@ app = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Adjust this as needed for your application
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Mount static files (CSS, JS, images)
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Set up the template directory
 templates = Jinja2Templates(directory="templates")
