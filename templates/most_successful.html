@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', path='most_successful_styles.css') }}">
 
-<style>
+<!-- <style>
     #most_s_table {
         margin-top: 20px;
         width: 80%;
@@ -21,7 +22,19 @@
         align-items: center;
         justify-content: center;
     }
-</style>
+    @media screen and (max-width: 800px) {
+        #most_s_table{
+            width: 100%;
+        }
+        .dataframe {
+            width: 109%;
+            font-size: 10px;
+        }
+        form div{
+            flex-direction: column;
+        }
+    }
+</style> -->
 <div class="container">
     <h1>Most Successful Players</h1>
     <form id="overallAnalysisForm" onsubmit="submitOverallAnalysis(event)">
@@ -44,7 +57,7 @@
         {{ table|safe }}
     </div>
 </div>
-<style>
+<!-- <style>
     fieldset {
         border: 1px solid blue;
         width: 360px;
@@ -126,7 +139,7 @@
     .active {
         background-color: lightblue;
     }
-</style>
+</style> -->
 
 <script>
     function sendName() {

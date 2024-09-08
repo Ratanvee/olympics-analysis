@@ -1,25 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', path='index_styles.css') }}">
 <!-- <link rel="stylesheet" type="text/css" href="/static/css/style.css"> -->
 <div class="index_content">
     <h1>Welcome to the Olympics Dashboard</h1>
     <p>Select an option from the sidebar to view details.</p>
 </div>
-<style>
-    .index_content {
-        margin-top: 100px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    h1{
-        font-size: 35px;
-        
-    }
-    .index_content p{
-        font-size: 20px;
-    }
-</style>
+
 {% endblock %}

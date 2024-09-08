@@ -1,0 +1,124 @@
+#most_s_table {
+    margin-top: 20px;
+    width: 80%;
+}
+
+.dataframe {
+    width: 100%;
+}
+
+.container {
+    margin-top: 150px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 800px) {
+    #most_s_table {
+        width: 100%;
+    }
+
+    .dataframe {
+        width: 109%;
+        font-size: 10px;
+    }
+
+    form div {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+
+
+fieldset {
+    border: 1px solid blue;
+    width: 360px;
+    border-radius: 5px;
+}
+
+
+legend,
+label {
+    color: rgb(204, 204, 204);
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+h1 {
+    align-content: unset;
+    font-size: 30px;
+}
+
+form div {
+    display: flex;
+    gap: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+input {
+    font-size: 18px;
+    padding: 5px;
+    height: 35px;
+    width: 300px;
+    border: 1px solid blue;
+    outline: none;
+    border-radius: 5px;
+    color: blue;
+    /*   border-bottom: none; */
+}
+
+button {
+    height: 46px;
+    width: 120px;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+button:hover {
+    border: 1px solid red;
+    color: red;
+}
+
+datalist {
+    position: absolute;
+    background-color: white;
+    border: 1px solid blue;
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+    font-family: sans-serif;
+    width: 350px;
+    max-height: 50%;
+    padding: 5px;
+    max-height: 10rem;
+    overflow-y: auto
+}
+
+option {
+    background-color: white;
+    padding: 4px;
+    color: blue;
+    margin-bottom: 1px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+option:hover,
+.active {
+    background-color: lightblue;
+}

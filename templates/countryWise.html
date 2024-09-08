@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', path='country_wise_styles.css') }}">
+
 <div class="country_wise_content">
     <h1>Interactive Graph</h1>
     <form id="data-form">
@@ -17,63 +20,10 @@
         </div>
     </form>
     <div>
-        <div id="graph" style="width:50%;height:400px;"></div>
+        <div id="graph" style="width:380px;height:400px;"></div>
     </div>
 </div>
-<style>
-    .country_wise_content {
-        margin-top: 100px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-self: center;
-        gap: 30px;
-    }
 
-    input {
-        height: 30px;
-        width: 400px;
-        border: 1px solid white;
-        border-radius: 6px;
-        font-size: 18px;
-        padding-left: 10px;
-    }
-
-    label {
-        font-size: 22px;
-    }
-
-    form div {
-        display: flex;
-        gap: 20px;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    button {
-        height: 35px;
-        border: 1px solid white;
-        background-color: black;
-        color: white;
-        border-radius: 5px;
-    }
-
-    button:hover {
-        color: red;
-        border: 1px solid red;
-    }
-
-    @media only screen and (width: 480px) {
-        #graph {
-            width: 50%;
-            height: 500px;
-        }
-    }
-</style>
 
 <div id="graph"></div>
 

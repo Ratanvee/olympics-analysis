@@ -6,133 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olympics Dashboard</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/static/css/style.css"> -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='base_styles.css') }}">
+
 </head>
-<style>
-    body{
-        background-color: #111;
-        color: white;
-    }
-    /* Styles for the sidebar */
-    .sidenav {
-        height: 100%;
-        width: 250px;
-        /* Default width for PC */
-        position: fixed;
-        margin-top: 99px;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #000000;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-    }
 
-    /* Links inside the sidebar */
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    /* Close button */
-    .sidenav a.closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-        display: none;
-        /* Hidden on desktop */
-    }
-
-    /* Change color of links on hover */
-    .sidenav a:hover {
-        color: #f1f1f1;
-    }
-
-    /* Main content margin when sidebar is open */
-    .main-content {
-        margin-left: 250px;
-        padding: 20px;
-        transition: margin-left 0.5s;
-        margin-top: 0px;
-    }
-
-    /* The menu icon (hamburger) is hidden on larger screens */
-    .menu_icon {
-        font-size: 30px;
-        cursor: pointer;
-        display: none;
-        /* Hidden on desktop */
-    }
-    header img {
-        object-fit: contain;
-      /* or
-        object-fit: cover; */
-      } 
-      
-
-    header {
-        background-color: #000000;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        /* font-size: 1rem; */
-        font-weight: bold;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        height: 59px;
-    }
-
-    @media screen and (max-width: 450px) {
-     h1{
-        font-size: 30px;
-     }
-    }
-    /* Mobile view */
-    @media screen and (max-width: 800px) {
-
-        /* Sidebar will be closed by default on mobile */
-        .sidenav {
-            width: 0;
-            transition: 0.5s;
-        }
-
-        /* Show the close button on mobile */
-        .sidenav a.closebtn {
-            display: block;
-            margin-top: 30px;
-        }
-
-        /* The menu icon is visible on mobile */
-        .menu_icon {
-            display: block;
-            margin-left: 15px;
-            margin-top: 130px;
-        }
-
-        /* Sidebar will take full width on mobile when opened */
-        .sidenav.open {
-            width: 100%;
-        }
-
-        /* Adjust main content when sidebar is closed */
-        .main-content {
-            margin-top: 40px;
-        }
-        header{
-            height: 85px;
-        }
-    }
-</style>
 
 <body>
 
@@ -153,7 +32,7 @@
             <span class="menu_icon" onclick="openNav()">&#9776;</span> <!-- Menu Icon (hamburger) -->
         </nav>
 
-        <div class="main-content">
+        <div id="main_content_index" class="main-content">
             {% block content %}{% endblock %}
         </div>
     </div>
@@ -161,10 +40,13 @@
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById('main_content_index').style.marginLeft = "250px";
+
         }
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
+            document.getElementById('main_content_index').style.marginLeft = "0";
         }
     </script>
 

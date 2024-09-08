@@ -3,6 +3,7 @@
 {% block content %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', path='overall_analysis_styles.css') }}">
 
 <h1>Overall Analysis</h1>
 
@@ -69,22 +70,22 @@
 <!-- Add a div with the id 'graph' -->
 <div class="chats">
     <div class="graphss">
-        <div id="graph" style="width:70%;height:600px;"></div>
+        <div id="graph" style="width:380px;height:400px;"></div>
     </div>
     <div class="graphss">
-        <div id="graph1" style="width:70%;height:600px;"></div>
+        <div id="graph1" style="width:380px;height:400px;"></div>
     </div>
     <div class="graphss">
-        <div id="graph2" style="width:70%;height:600px;"></div>
+        <div id="graph2" style="width:380px;height:400px;"></div>
     </div>
     <div class="graphss">
-        <div id="graph3" style="width:70%;height:600px;"></div>
+        <div id="graph3" style="width:380px;height:400px;"></div>
     </div>
     <div class="graphss">
-        <div id="graph4" style="width:70%;height:600px;"></div>
+        <div id="graph4" style="width:380px;height:400px;"></div>
     </div>
     <div class="graphss">
-        <div id="heatmap" style="width:70%; height: 600px;"></div>
+        <div id="heatmap" style="width:380px; height: 400px;"></div>
     </div>
 
 
@@ -234,76 +235,6 @@
 
 
 </script>
-
-
-
-
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #111;
-        color: white;
-    }
-
-    .container {
-        text-align: center;
-        padding: 50px;
-        width: 91%;
-    }
-
-    h1 {
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        max-width: 900px;
-        margin: 0 auto;
-        width: 60%;
-    }
-
-    .stat {
-        background-color: #222;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .stat h2 {
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
-
-    .stat p {
-        font-size: 24px;
-        margin: 0;
-    }
-
-    footer {
-        margin-top: 50px;
-        font-size: 12px;
-    }
-
-    .graphss {
-
-        height: 800px;
-    }
-
-    @media screen and (max-width: 800px) {
-        .graphss {
-            width: 100%;
-        }
-
-        .container {
-            width: 62%;
-        }
-    }
-</style>
-
 
 
 
